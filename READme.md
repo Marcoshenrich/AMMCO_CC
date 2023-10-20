@@ -104,7 +104,7 @@ const findFavorite = (movieLikesTracker: FavoriteMovieObject) => {
 
 ```
 
-##Improvements / Extensions
+## Improvements / Extensions
 
 Here are some ways that the algorithm could be improved and expanded on. 
 
@@ -114,7 +114,7 @@ The N time complexity of iterating through the movieLikesTracker is generally ac
 2. Genericize the Traversal Algorithm
 I considered building a version of the algorithm which could accept traversal and resolution callbacks. This would allow a single abstracted traversal algorithm to be used for various network traversal purposes. However, I chose a simpler more readable version for the purposes of the coding challenge. 
 
-##The Test
+## The Test
 
 ```javascript
 test('favoriteMovieInNetwork finds the favorite movie in your network', () => {
