@@ -10,7 +10,7 @@ The User class contains arrays of friends and movies to appropriately traverse t
 
 
 ```typescript
-export class User {
+class User {
     id: string;
     friends: Array<User>;
     likedMovies: Array<Movie>;
@@ -22,7 +22,7 @@ export class User {
     }
 }
 
-export class Movie {
+class Movie {
     id: string;
     title: string;
 
@@ -38,9 +38,9 @@ Next, we build a function that accepts a user and a depth. The depth allows the 
 
 We initialize an object to track unique movie titles and increment a count each time they are present in a user's movie list.
 
-The Set and graph visitation logic is centered around reducing the total length of the queue at any time. A user is only added to the queue once. 
+The Set and graph visitation logic is centered around reducing the total length of the queue at any time. Any user is only added to the queue once. 
 
-I decided to use a DFS approach with a declared stack because a large array is more mananageable on the memory side than crashing a recursive call stack when dealing with large networks. 
+I decided to use a DFS approach with a declared stack because a large array is more mananageable on the memory side than a recursive call stack when dealing with large networks. 
 
 This type of pattern is typical with a BFS queue implementation, but Javascript's Array.shift() method is inefficient for large data sets. Therefore I used Array.pop() because it does not change the result of this particular algorithm, and is much faster. 
 
@@ -53,16 +53,16 @@ interface FavoriteMovieObject {
     [key: MovieTitle]: Count
 }
 
-export const favoriteMovieInNetwork = (user: User, depth: number) => {
+const favoriteMovieInNetwork = (user: User, depth: number) => {
     if (depth < 0) return "Friend Network Depth Required"
 
     const movieLikesTracker = {} as FavoriteMovieObject;
-    let userQueue: [User, number][] = [[user, depth]];
+    let userStack: [User, number][] = [[user, depth]];
     const visitedUsers = new Set(user.id);
    
-    while (userQueue.length) {
+    while (userStack.length) {
 
-        let [currentUser, depth] = userQueue.pop()!;
+        let [currentUser, depth] = userStack.pop()!;
 
         for (const movie of currentUser.likedMovies) {
             movieLikesTracker[movie.title] ||= 0;
@@ -104,7 +104,7 @@ const findFavorite = (movieLikesTracker: FavoriteMovieObject) => {
 
 ```
 
-#Improvements / Extensions
+##Improvements / Extensions
 
 Here are some ways that the algorithm could be improved and expanded on. 
 
@@ -114,7 +114,7 @@ The N time complexity of iterating through the movieLikesTracker is generally ac
 2. Genericize the Traversal Algorithm
 I considered building a version of the algorithm which could accept traversal and resolution callbacks. This would allow a single abstracted traversal algorithm to be used for various network traversal purposes. However, I chose a simpler more readable version for the purposes of the coding challenge. 
 
-The Test
+##The Test
 
 ```javascript
 test('favoriteMovieInNetwork finds the favorite movie in your network', () => {
@@ -165,3 +165,5 @@ test('favoriteMovieInNetwork finds the favorite movie in your network', () => {
 });
 
 ```
+
+Thank you for letting me participate in the coding challenge! I'm excited to learn more about AAMCO's mission to save species and habitats from extinction and to contribute to an amazing project. 
